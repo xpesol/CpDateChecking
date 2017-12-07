@@ -1,0 +1,43 @@
+.tag_light_blue{
+	background-color:#2E9AFE;
+
+}
+
+.tag_light_green{
+	background-color:#82FA58;	
+}
+
+.tag_ocher{
+	background-color:#FACC2E;	
+}
+
+.tag_white{
+	background-color:white;	
+}
+
+font.FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP          { font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif; color:black    ;font-size:10px    ;font-weight:bold    ;}    /*titre d'un critère de filtre*/
+
+
+.div_check_date{
+  position: fixed;
+  left: 400;
+  right: 500;
+  width:auto;
+  height:auto;
+  padding:10px;
+  background-color: #DFE0D0 ;
+  font-size: 10px;
+  font: Optima,Tahoma,Verdana;
+  color:black; 
+  border: 3px solid;
+  border-color: #b3c0e2 #bcc5e2 #c0ccea #b3c0e2;
+  border-radius: 4px;
+
+
+  box-shadow: 10px 10px 5px #888888;
+
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 5px 1px rgba(0,0,0,0.75);
+	  
+}
