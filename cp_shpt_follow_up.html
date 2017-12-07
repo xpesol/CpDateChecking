@@ -1,0 +1,383 @@
+<script language="Javascript"> 
+search_with_criteria = function(ticket){
+		
+	var params = "TICKET="+ticket;
+	
+	if (document.getElementById("s_supplier").value)
+	{ params += "&s_supplier="+document.getElementById("s_supplier").value;}
+	
+	if (document.getElementById("s_uo").value)
+	{ params += "&s_uo="+document.getElementById("s_uo").value;}
+	
+	if (document.getElementById("s_po").value)
+	{ params += "&s_po="+document.getElementById("s_po").value;}
+	
+	if (document.getElementById("s_warehouse").value)
+	{ params += "&s_warehouse="+document.getElementById("s_warehouse").value;}
+	
+	if (document.getElementById("s_sku").value)
+	{ params += "&s_sku="+document.getElementById("s_sku").value;}
+	
+	if (document.getElementById("s_status").value)
+	{ params += "&s_status="+document.getElementById("s_status").value;}
+	
+	if (document.getElementById("s_text").value)
+	{ params += "&s_text="+document.getElementById("s_text").value;}
+    
+	var url = 'cp_shpt_follow_up.psp?'+params;
+
+    window.location = url;
+	
+};
+</script >
+<link href="./scripts/calendar/datepicker.css" type="text/css" rel="stylesheet">
+<link href="./styles/cp_shpt_follow_up.css" type="text/css" rel="stylesheet">
+
+<script language="Javascript" src="scripts/fonctions.js"></script>
+<script src="scripts/calendar/vspcompiled.js" type="text/javascript"></script>
+<script language="Javascript" src="scripts/window.js"></script>
+<script src="ajax/js/prototype.js" type="text/javascript"></script>
+<script src="ajax/js/effects.js" type="text/javascript"></script>
+<script src="ajax/js/dragdrop.js" type="text/javascript"></script>
+<script src="ajax/js/prototype.js" type="text/javascript"></script>
+<script src="ajax/js/controls.js" type="text/javascript"></script>
+<script language="javascript" src="scripts/save_on_change.js"></script>
+<script language="Javascript" src="scripts/cp_loading.js"></script>
+<script language="javascript" src="./scripts/ada_track.js"></script>
+
+<!--
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+// CD20170710 le css w3schools masque la barre de defilement horizontal.
+// on force l'affichage de cette barre.
+html{
+	overflow:visible;
+	overflow-x:visible;
+	overflow-y:visible;
+}
+</style>
+-->
+<div id="main_loading_div" style="position:absolute"></div>
+<div id="div_save_detail"></div>
+
+<input type="hidden" name="ticket" id="ticket" value="<TMPL_VAR ticket>">
+
+<table class="GENERAL_FILTRE" valign="center" cellspacing="1" cellpadding="0" border="0" align="center">
+    <input name="etat" value="" type="hidden">
+	<input id="data_to_edit" value="" type="hidden">
+    <tbody><tr >
+        <td>
+            <table class="FILTRE_DETAIL" valign="middle" width="100%" cellspacing="1" cellpadding="1" border="0" align="center">
+                <tbody><tr >
+                    <td class="FILTRE_TITRE" align="left" width="150px">
+                        <font class="FILTRE_TITRE">&nbsp;Shipment follow up</font>
+                    </td>
+					<td class="FILTRE_TITRE" align="left" width="100px">
+					<label for="s_supplier">Supplier</label><br>
+					<input type="text" id="s_supplier" name="s_supplier" value = "<TMPL_VAR s_supplier>" placeholder="Supplier" style="margin-top: 8px;margin-left: 5px;" onKeyPress="if( event.keyCode == '13' ){ search_with_criteria('<TMPL_VAR ticket>');return false };">
+					</td>
+					<td class="FILTRE_TITRE" align="left" width="100px">
+					<label for="s_uo">UO</label>
+					<input type="text" id="s_uo" name="s_uo" value = "<TMPL_VAR s_uo>" placeholder="UO" style="margin-top: 8px;margin-left: 5px;" size ="10em" onKeyPress="if( event.keyCode == '13' ){ search_with_criteria('<TMPL_VAR ticket>');return false };">
+					</td>
+					<td class="FILTRE_TITRE" align="left" width="100px">
+					<label for="s_po">PO</label>
+					<input type="text" id="s_po" name="s_po" value = "<TMPL_VAR s_po>" placeholder="PO" style="margin-top: 8px;margin-left: 5px;" onKeyPress="if( event.keyCode == '13' ){ search_with_criteria('<TMPL_VAR ticket>');return false };">
+					</td>
+					<td class="FILTRE_TITRE" align="left" width="100px">
+					<label for="s_warehouse">Warehouse</label>
+					<input type="text" id="s_warehouse" name="s_warehouse" value = "<TMPL_VAR s_warehouse>" placeholder="Warehouse" style="margin-top: 8px;margin-left: 5px;" onKeyPress="if( event.keyCode == '13' ){ search_with_criteria('<TMPL_VAR ticket>');return false };">
+			        </td>
+					<td class="FILTRE_TITRE" align="left" width="100px">
+					<label for="s_sku">SKU</label>
+					<input type="text" id="s_sku" name="s_sku" value = "<TMPL_VAR s_sku>" placeholder="SKU" style="margin-top: 8px;margin-left: 5px;" size ="10em" onKeyPress="if( event.keyCode == '13' ){ search_with_criteria('<TMPL_VAR ticket>');return false };">
+					</td>
+					<td class="FILTRE_TITRE" align="left" width="100px">
+					<label for="s_status">Status</label>
+					<input type="text" id="s_status" name="s_status" value = "<TMPL_VAR s_status>" placeholder="Status" style="margin-top: 8px;margin-left: 5px;" onKeyPress="if( event.keyCode == '13' ){ search_with_criteria('<TMPL_VAR ticket>');return false };">
+					</td>
+					<td class="FILTRE_TITRE" align="left" width="100px">
+					<label for="s_text">Mot-clef</label>
+					<input type="text" id="s_text" name="s_text" value = "<TMPL_VAR s_text>" placeholder="mot-clef" style="margin-top: 8px;margin-left: 5px;" onKeyPress="if( event.keyCode == '13' ){ search_with_criteria('<TMPL_VAR ticket>');return false };">	
+					</td>
+					<td class="FILTRE_TITRE" align="left">
+					<img src="images/Button_PM_Find_blue.png" onclick = "search_with_criteria('<TMPL_VAR ticket>')" > 
+					</td>
+                </tr>
+            </tbody></table>
+        </td>
+    </tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td class="GENERAL_CRITERE">
+            <table id="PO_index" class="FILTRE_DETAIL" valign="middle" width="100%" cellspacing="1" cellpadding="1" border="0" align="center">
+				<tbody>
+				<tr>	
+				
+				
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Shipment N# / N d'entrée	</font></td>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Status	</font></td>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Supplier	</font></td>
+<TMPL_IF is_contact_yr>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	UO	</font></td>
+</TMPL_IF>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	PO	</font></td>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	SKU	</font></td>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Delivery Place	</font></td>
+<TMPL_IF is_contact_yr>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Pieces Ordered	</font></td>
+</TMPL_IF>
+<TMPL_IF is_contact_yr>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Pallets Ordered	</font></td>
+</TMPL_IF>
+<TMPL_IF is_contact_yr>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Cartons Ordered	</font></td>
+</TMPL_IF>
+					<td class="tag_light_blue" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Exw Date	</font></td>
+					
+					<td class="tag_ocher" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Loading Date	</font></td>
+					<td class="tag_ocher" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Loading time	</font></td>
+<TMPL_IF is_contact_yr>
+					<td class="tag_ocher" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Transport Order Sending date </font></td>
+</TMPL_IF>
+					<td class="tag_ocher" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Pieces Shipped	</font></td>
+					<td class="tag_ocher" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Paletts  Shipped  </font></td>
+					
+					<td class="tag_light_green" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Delivery Rdv Date	</font></td>
+					<td class="tag_light_green" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Delivery Rdv time	</font></td>
+					
+					<td class="tag_light_green" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">    Date Put Away	  </font></td>
+					<td class="tag_light_green" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Pieces Put Away	  </font></td>
+					<td class="tag_light_green" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Pallets Put Away  </font></td>
+					<td class="tag_light_green" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Cartons Put Away  </font></td>
+					
+					<td  class ="tag_white" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Warehouse Arrival Date	</font></td>	
+					<td  class ="tag_white" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Initial warehouse Date	</font></td>
+					<td  class ="tag_white" align="center"><font class="FILTRE_TITRE_CRITERE_CP_SHPT_FOLLOW_UP">	Amended warehouse Date	</font></td>
+				
+				
+				</tr>
+<TMPL_LOOP loop>
+
+				<tr class="<TMPL_VAR alterne>">	
+					<td align="center"><font>
+						<table width="100%">
+							<tr>
+								<td width="100%"><TMPL_VAR ref></td>
+								<TMPL_IF is_remove_allowed>
+									<td><img src="images/Button_PM_Delete.png" onclick="delete_ref('<TMPL_VAR idloading_po_sku>', '<TMPL_VAR ref>', '<TMPL_VAR num_po>');"> </td>
+								</TMPL_IF>
+								<td>
+								<img src="images/flag_<TMPL_VAR cp_loading_detail_fnd_check_color>.png" width="12" height="12" border="0"  onclick="window.open('cp_show_loading_po_sku_detail_fnd.psp?ticket=<TMPL_VAR TICKET>&idloading=<TMPL_VAR idloading>','loading_detail_fnd','width=600,height=800,scrollbars=yes,resizable=yes'); return false;"> 
+								</td>
+								
+								
+							</tr>
+						</table>
+					</td>
+				    <td align="center"><font><TMPL_VAR status></font></td>
+					<td align="center" nowrap><font><TMPL_VAR supplier></font></td>
+<TMPL_IF is_contact_yr>
+					<td align="center">
+					<a href="" onclick="open_new_Window('ada_track_all_main.psp?TICKET=<TMPL_VAR TICKET>&amp;num_uo=<TMPL_VAR uo>','Admin Follow-up'); return false;">
+					<TMPL_VAR uo></a>
+					</td>
+</TMPL_IF>
+					<td align="center"><font>
+						<table width="100%">
+							<tr>
+								<td width="100%"><a class="RELIQUAT" href="" onclick="NelleFenetre('affichage_po.psp?TICKET=<TMPL_VAR ticket>&NUM_PO=<TMPL_VAR num_po>&amp;MORE=0','po_original');return false;"><TMPL_VAR num_po></a></td>
+<TMPL_IF is_contact_yr>
+								<td><img src="images/report.png" onclick="window.open('cp_order_transport.psp?TICKET=<TMPL_VAR ticket>&num_po=<TMPL_VAR num_po>&ref=<TMPL_VAR ref>','','width=1085,height=1210,scrollbars=yes,resizable=yes')"> </td>
+								<td><img src="images/Button_PM_Find.png"  onclick="window.open('http://sy.fcsystem.com/web/app.php/table/<TMPL_VAR num_po>','','width=800,height=400,scrollbars=yes,resizable=yes')"> </td>
+								<TMPL_IF ot_path>
+									<td><img src="images/page_white_acrobat.png" onclick="window.open('<TMPL_VAR ot_path>')"> </td>
+								</TMPL_IF>
+</TMPL_IF>
+							</tr>
+							</table>
+					</td>
+					<td align="center"><font><TMPL_VAR sku_id> - <TMPL_VAR sku_designation></td>
+					<td align="center"><font><TMPL_VAR delivery_place></font></td>
+<TMPL_IF is_contact_yr>
+					<td align="center"><font><TMPL_VAR pcs_nb_ordered></font></td>
+</TMPL_IF>
+<TMPL_IF is_contact_yr>
+					<td align="center"><font><TMPL_VAR pallet_nb_ordered></font></td>
+</TMPL_IF>
+<TMPL_IF is_contact_yr>
+					<td align="center"><font><TMPL_VAR ctn_nb_ordered></font></td>
+</TMPL_IF>
+
+
+					<td align="center"><font><TMPL_VAR planned_loading_date></font></td>
+					
+					<td align="center">
+	
+						<input class="w3-input w3-border-0" name="loading_estimated_date" size="11" id="loading_estimated_date-@-<TMPL_VAR ref>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR loading_estimated_date>" onclick="update_data(this);return false;" style="text-decoration: underline;width:100px;background-color:white;font-weight: bold;">
+					
+						<input name="loading_estimated_date" size="11" id="loading_estimated_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR loading_estimated_date>"  style="display:none;width:80px;">
+						
+						<table  border="0" style="float:right;">
+							<tr>
+							<td><a href="" style="display:none;" id="loading_estimated_date-@-<TMPL_VAR ref>-@-img-@-<TMPL_VAR num_po>" onclick="empty_input('loading_estimated_date'); return false;"><img src="images/Button-PM_Reset.png" border="0" width="15" height="15"></a></td>
+							<td><img src="./images/Button_little_Delete.png" id="loading_estimated_date-@-<TMPL_VAR ref>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+							<td><img src="./images/Button_little_OK.png" id="loading_estimated_date-@-<TMPL_VAR ref>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('loading_estimated_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading','fcs','ref');update_data(this);return false;"/></td>
+							</tr>
+						</table>
+						
+					</td>
+					<td align="center">
+						<input class="w3-input w3-border-0" name="loading_estimated_time" size="11" id="loading_estimated_time-@-<TMPL_VAR ref>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR loading_estimated_time>" onclick="update_data(this);return false;" style="text-decoration: underline;width:100px;background-color:white;font-weight: bold;">
+						
+						<input name="loading_estimated_time" size="11" id="loading_estimated_time-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR loading_estimated_time>"  style="display:none;width:80px;">
+						<a href="" style="display:none;" id="loading_estimated_time-@-<TMPL_VAR ref>-@-img-@-<TMPL_VAR num_po>" onclick="empty_input('loading_estimated_time'); return false;"><img src="images/Button-PM_Reset.png" border="0"></a>
+						
+						<table  border="0" style="float:right;">
+							<tr>
+							<td  ><img src="./images/Button_little_Delete.png" id="loading_estimated_time-@-<TMPL_VAR ref>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+							<td  ><img src="./images/Button_little_OK.png" id="loading_estimated_time-@-<TMPL_VAR ref>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('loading_estimated_time-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading','fcs','ref');update_data(this);return false;"/></td>
+							</tr>
+						</table>
+							
+					</td>
+<TMPL_IF is_contact_yr>
+					<td align="center">
+						<table>
+							<tr>
+								<td><TMPL_IF ot_sent_date><img src="images/Button_PM_OK.png"></TMPL_IF></td>
+								<td><font><TMPL_IF ot_sent_date></TMPL_IF><TMPL_VAR ot_sent_date></font></td>
+							</tr>
+						</table>
+					</td>
+</TMPL_IF>
+					<td align="center"><font><TMPL_VAR pcs_nb_forwarded></font></td>
+					<td align="center"><font><TMPL_VAR pallet_nb_forwarded></font></td>
+					
+					<td align="center">
+					
+						<input class="w3-input w3-border-0" name="delivery_estimated_date" size="11" id="delivery_estimated_date-@-<TMPL_VAR ref>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR delivery_estimated_date>" onclick="update_data(this);return false;" style="text-decoration: underline;width:100px;background-color:white;font-weight: bold;">
+						
+						<input name="delivery_estimated_date" size="11" id="delivery_estimated_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR delivery_estimated_date>"  style="display:none;width:80px;">
+						<a href="" style="display:none;" id="delivery_estimated_date-@-<TMPL_VAR ref>-@-img-@-<TMPL_VAR num_po>" onclick="empty_input('delivery_estimated_date'); return false;"><img src="images/Button-PM_Reset.png" border="0"></a>
+						
+						<table  border="0" style="float:right;">
+							<tr>
+							<td  ><img src="./images/Button_little_Delete.png" id="delivery_estimated_date-@-<TMPL_VAR ref>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+							<td  ><img src="./images/Button_little_OK.png" id="delivery_estimated_date-@-<TMPL_VAR ref>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('delivery_estimated_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading','fcs','ref');update_data(this);return false;"/></td>
+							</tr>
+						</table>
+								
+					</td>
+					
+					<td align="center">
+					
+						<input class="w3-input w3-border-0" name="delivery_estimated_time" size="11" id="delivery_estimated_time-@-<TMPL_VAR ref>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR delivery_estimated_time>" onclick="update_data(this);return false;" style="text-decoration: underline;width:50px;background-color:white;font-weight: bold;">
+						
+						<input name="delivery_estimated_time" size="11" id="delivery_estimated_time-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR delivery_estimated_time>"  style="display:none;width:50px;">
+						<a href="" style="display:none;" id="delivery_estimated_time-@-<TMPL_VAR ref>-@-img-@-<TMPL_VAR num_po>" onclick="empty_input('delivery_estimated_time'); return false;"><img src="images/Button-PM_Reset.png" border="0"></a>
+						
+						<table  border="0" style="float:right;">
+							<tr>
+							<td  ><img src="./images/Button_little_Delete.png" id="delivery_estimated_time-@-<TMPL_VAR ref>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+							<td>
+							<img src="./images/Button_little_OK.png" id="delivery_estimated_time-@-<TMPL_VAR ref>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('delivery_estimated_time-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading','fcs','ref');update_data(this);return false;"/>
+							</td>
+							</tr>
+						</table>
+
+					</td>
+
+
+					<td align="center">
+						<TMPL_VAR stock_received_ts>
+					</td>
+
+					<td align="center">
+                     	<input class="w3-input w3-border-0" name="pcs_received" size="11" id="pcs_received-@-<TMPL_VAR idloading_po_sku>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR pcs_received>" onclick="update_data(this);return false;" style="text-decoration: underline;width:50px;background-color:white;font-weight: bold;">
+								
+						<input name="pcs_received" size="11" id="pcs_received-@-<TMPL_VAR idloading_po_sku>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR pcs_received>"  style="display:none;width:50px;">
+								
+						<table  border="0" style="float:right;">
+									<tr>
+									<td  ><img src="./images/Button_little_Delete.png" id="pcs_received-@-<TMPL_VAR idloading_po_sku>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+									<td  ><img src="./images/Button_little_OK.png" id="pcs_received-@-<TMPL_VAR idloading_po_sku>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('pcs_received-@-<TMPL_VAR idloading_po_sku>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading_po_sku','fcs','idloading_po_sku');update_data(this);return false;"/></td>
+									</tr>
+						</table>
+					</td>
+					<td align="center">
+					
+						<input class="w3-input w3-border-0" name="pallet_received" size="11" id="pallet_received-@-<TMPL_VAR idloading_po_sku>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR pallet_received>" onclick="update_data(this);return false;" style="text-decoration: underline;width:50px;background-color:white;font-weight: bold;">
+							
+						<input name="pallet_received" size="11" id="pallet_received-@-<TMPL_VAR idloading_po_sku>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR pallet_received>"  style="display:none;width:50px;">
+							
+						<table  border="0" style="float:right;">
+								<tr>
+								<td  ><img src="./images/Button_little_Delete.png" id="pallet_received-@-<TMPL_VAR idloading_po_sku>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+								<td  ><img src="./images/Button_little_OK.png" id="pallet_received-@-<TMPL_VAR idloading_po_sku>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('pallet_received-@-<TMPL_VAR idloading_po_sku>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading_po_sku','fcs','idloading_po_sku');update_data(this);return false;"/></td>
+								</tr>
+						</table>
+
+					</td>
+					<td align="center">
+						<input class="w3-input w3-border-0" name="ctn_received" size="11" id="ctn_received-@-<TMPL_VAR idloading_po_sku>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR ctn_received>" onclick="update_data(this);return false;" style="text-decoration: underline;width:50px;background-color:white;font-weight: bold;">
+								
+						<input name="ctn_received" size="11" id="ctn_received-@-<TMPL_VAR idloading_po_sku>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR ctn_received>"  style="display:none;width:50px;">
+								
+						<table  border="0" style="float:right;">
+									<tr>
+									<td  ><img src="./images/Button_little_Delete.png" id="ctn_received-@-<TMPL_VAR idloading_po_sku>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+									<td  ><img src="./images/Button_little_OK.png" id="ctn_received-@-<TMPL_VAR idloading_po_sku>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('ctn_received-@-<TMPL_VAR idloading_po_sku>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading_po_sku','fcs','idloading_po_sku');update_data(this);return false;"/></td>
+									</tr>
+						</table>
+					
+					</td>
+					<td align="center">
+					
+						<input class="w3-input w3-border-0" name="delivery_real_date" size="11" id="delivery_real_date-@-<TMPL_VAR ref>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR delivery_real_date>" onclick="update_data(this);return false;" style="text-decoration: underline;width:100px;background-color:white;font-weight: bold;">
+						
+						<input name="delivery_real_date" size="11" id="delivery_real_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR delivery_real_date>"  style="display:none;width:80px;">
+						<a href="" style="display:none;" id="delivery_real_date-@-<TMPL_VAR ref>-@-img-@-<TMPL_VAR num_po>" onclick="empty_input('delivery_real_date'); return false;"><img src="images/Button-PM_Reset.png" border="0"></a>
+						
+						<table  border="0" style="float:right;">
+							<tr>
+							<td  ><img src="./images/Button_little_Delete.png" id="delivery_real_date-@-<TMPL_VAR ref>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+							<td  ><img src="./images/Button_little_OK.png" id="delivery_real_date-@-<TMPL_VAR ref>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('delivery_real_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading','fcs','ref');update_data(this);return false;"/></td>
+							</tr>
+						</table>
+					
+					</td>
+					<td align="center"><font><TMPL_VAR initial_whse_date></font></td>
+					
+					<td align="center">
+					
+						<input class="w3-input w3-border-0" name="delivery_amended_date" size="11" id="delivery_amended_date-@-<TMPL_VAR ref>-@-open-@-<TMPL_VAR num_po>" value="<TMPL_VAR delivery_amended_date>" onclick="update_data(this);return false;" style="text-decoration: underline;width:100px;background-color:white;font-weight: bold;">
+						
+						<input name="delivery_amended_date" size="11" id="delivery_amended_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>" value="<TMPL_VAR delivery_amended_date>"  style="display:none;width:80px;">
+						<a href="" style="display:none;" id="delivery_amended_date-@-<TMPL_VAR ref>-@-img-@-<TMPL_VAR num_po>" onclick="empty_input('delivery_amended_date'); return false;"><img src="images/Button-PM_Reset.png" border="0"></a>
+						
+						<table  border="0" style="float:right;">
+							<tr>
+							<td  ><img src="./images/Button_little_Delete.png" id="delivery_amended_date-@-<TMPL_VAR ref>-@-close-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="update_data(this);return false;"/></td>
+							<td  ><img src="./images/Button_little_OK.png" id="delivery_amended_date-@-<TMPL_VAR ref>-@-save-@-<TMPL_VAR num_po>" style="display:none;cursor:pointer;" onclick="save_field_generic_with_id_param('delivery_amended_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>','<TMPL_VAR TICKET>','cp_loading','fcs','ref');update_data(this);return false;"/></td>
+							</tr>
+						</table>
+					
+					</td>
+				</tr>
+</TMPL_LOOP>
+			</tbody></table>
+		</td>
+	</tr>
+</tbody></table>
+</form>
+
+<TMPL_LOOP loop>
+		<script language="javascript" type="text/javascript">
+		  _DP_addToInput("loading_estimated_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>", 1);
+		  _DP_addToInput("delivery_estimated_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>", 1);
+		  _DP_addToInput("delivery_real_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>", 1);
+		  _DP_addToInput("delivery_amended_date-@-<TMPL_VAR ref>-@-edit-@-<TMPL_VAR num_po>", 1);
+		</script>	
+	</TMPL_LOOP>	
+
